@@ -28,8 +28,8 @@
 #endif 
 
 #include <vector>
-#include "cv.h"
-#include "highgui.h"
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
 
 using namespace std;
 
@@ -141,13 +141,25 @@ namespace CvPlot
 
 	};
 
-	// handle different data types; static mathods;
+    // handle different data types; static methods;
 
-	template<typename T>
+    /**
+     * @brief Matlab style plot functions for OpenCV by Changbo (zoccob@gmail). plot and label.
+     *
+     * @param figure_name required. multiple calls of this function with same figure_name plots multiple curves on a single graph.
+     * @param p required. pointer to data.
+     * @param count required. number of data.
+     * @param step optional. step between data of two points, default 1.
+     * @param R optional. assign a color to the curve. if not assigned, the curve will be assigned a unique color automatically.
+     * @param G
+     * @param B
+     */
+    template<typename T>
 	void plot(const string figure_name, const T* p, int count, int step = 1,
 			  int R = -1, int G = -1, int B = -1);
+
 	void clear(const string figure_name);
 
 	void label(string lbl);
 
-};
+}

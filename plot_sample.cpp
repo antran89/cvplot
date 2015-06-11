@@ -1,10 +1,14 @@
 // Matlab style plot functions for OpenCV by Changbo (zoccob@gmail).
 
-#include "cv.h"
-#include "highgui.h"
+#include <opencv2/core.hpp>
+#include <opencv2/core.hpp>
 #include "cvplot.h"
 
+#include <iostream>
 
+using namespace cv;
+
+// legacy code
 #define rowPtr(imagePtr, dataType, lineIndex) \
 	    (dataType *)(imagePtr->imageData + (lineIndex) * imagePtr->widthStep)
 
@@ -12,18 +16,18 @@
 int main(int argc, char* argv[])
 {
 	// load an image
-	char *imagefile = "test.jpg";
+    char *imagefile = "../test.jpg";
 
-	IplImage *image = cvLoadImage(imagefile);
+    Mat image = imread( imagefile );
 
-	if (image == NULL)
+    if ( image.empty() )
 	{
 		std::cout << "image error: " << imagefile << std::endl << std::flush;
 		return -1;
 	}
 
 	// show an image
-	cvShowImage("original", image);
+    imshow("original", image);
 
 	// plot and label:
 	//
@@ -48,10 +52,10 @@ int main(int argc, char* argv[])
 	int the_line = 100;
 	
 	int key = -1;
-	while (the_line < image->height)
+    while ( the_line < image.rows )
 	{
-		unsigned char *pb = rowPtr(image, unsigned char, the_line);
-		int width = image->width;
+        unsigned char *pb = image.ptr( the_line );
+        int width = image.cols;
 		
 		CvPlot::plot("RGB", pb+0, width, 3);
 		CvPlot::label("B");
@@ -74,8 +78,6 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
-
-	cvReleaseImage(&image);
 
 	return 0;
 }
