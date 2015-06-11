@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(cvplot)
+project(cvplot_example)
 
 #OPENCV
 include_directories(~/local/include)
@@ -21,6 +21,10 @@ set( CMAKE_BUILD_TYPE Release )
 #C++ AND linker flags
 list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -pipe -D __STDC_CONSTANT_MACROS -D STD=std -Wall -O3 -DNDEBUG -ggdb ${CMAKE_CXX_FLAGS}")
 
+# create library
+add_library( cvplot SHARED cvplot.cpp cvplot.h )
+target_link_libraries( cvplot ${OpenCV_LIBS} )
+
 # add the executable for myIDT
-add_executable( ${PROJECT_NAME} plot_sample.cpp cvplot.cpp cvplot.h )
-target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )
+add_executable( ${PROJECT_NAME} plot_sample.cpp )
+target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} cvplot )
